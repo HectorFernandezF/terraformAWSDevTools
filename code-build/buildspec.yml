@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Changing to Ruby Gemfile directory
+      - cd code-build
+  build:
+    commands:
+      - echo Build started on `date`
+      - bundle install
+artifacts:
+  files:
+    - ruby-example/Gemfile.lock
