@@ -33,7 +33,7 @@ resource "aws_iam_role" "codebuildRole" {
 
 # s3 bucket
 resource "aws_s3_bucket" "codebuild_demo_artifact" {
-  bucket = "mytestings3bucket4builds"  
+  bucket = "mytestings3bucket4builds2"  
 }
 
 # pluralsight does not support codestart connections
@@ -111,7 +111,7 @@ locals {
       name = "RubyBuildProject"
       gh_repo = "https://github.com/HectorFernandezF/terraformAWSDevTools"
       buildspec = "code-build/buildspec.yml"
-      image = "aws/codebuild/amazonlinux-x86_64-lambda-standard:ruby3.2"
+      image = "aws/codebuild/eb-ruby-2.3-amazonlinux-64:2.1.6"
     }
   }
 }
@@ -140,7 +140,8 @@ resource "aws_codebuild_project" "codebuild_projects" {
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
     image = each.value.image
-    type = "LINUX_CONTAINER"
+    type         = "LINUX_CONTAINER"
+    # type = each.value.name == "RubyBuildProject" ? "LINUX_LAMBDA_CONTAINER" : "LINUX_CONTAINER"
 
     environment_variable {
       name = "foo"
