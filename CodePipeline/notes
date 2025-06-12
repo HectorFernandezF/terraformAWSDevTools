@@ -1,0 +1,47 @@
+Continuous Delivery pipelines
+- Define the entire release process. Stages where you use source control repo updates kick off the pipeline, the code is built, tested in a CI system.
+  Then is deployes to a non production environment, manual approve required.
+- CodePipeline ties together disparate systems
+- Flows code out to production
+
+Prerequisites for CodePipeline
+- IAM setup
+- 2 stages
+  - Source code: Aws code commit, EC3, S3, GH
+  - Build: CodeBuild or jenkins. 
+  - Deployment: Cloudformation, CodeDeploy, Elastic Beanstalk, OpsWorks Stacks, Service Catalog, Alexa skills kit, ECS with blue/green, S3.
+
+Benefits of CodePipeline
+- Fully managed pipeline service
+- Pay only for active pipelines
+- Tightly knit aws integrations
+- Third party developer tool actions
+- Extensible via Lambda and custom actions
+
+Components of CodePipeline
+- Pipelines: Definitions and visualization of the software release process
+  - Stages: Functional portion of pipeline
+    - One or more action group
+      - One or more actions
+  - Transitions: Connection between stages
+  - Artifacts: Code produced by stages and ingested by another stage
+- Execution: Invocation of pipeline process
+
+Visualizing CodePipeline
+| Source Stage | Build Stage      | Deployment Stage
+------------------------------------------------------
+| Action group | Action group     | Action group  
+| GH action    | CodeBuild action | CodeDeploy action
+
+Action Types
+- Source Action: Where source code live and can be used to kick off the pipeline process
+- Build Action: Where the source code is build with the requirements 
+- Test Action: AWS device farm, jenkins, blazemetter, ghost inspector, microfocus storm runner and runscope
+- Deploy Action: Instructions to release the code into an environment
+- Approval Action: Manual approval is built itself in the service
+- Invoke Action: AWS lambda
+
+Pipeline execution monitoring
+- CodeDeploy Triggers: Publish to SNS topic when a deployment event occur
+- CloudWatch Events: route codepipeline evento infor to one or more targets
+- 
